@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: public
+      POSTGRES_USER: ${DB_USER:-root}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-root}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    networks:
+      - private
+
+  api:
+    build: ./flux-api
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - private
+      - public
+
+  web:
+    build: ./flux-web
+    env_file:
+      - ./.env
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    networks:
+      - public
+
+networks:
+  public:
+  private:
+    internal: true
