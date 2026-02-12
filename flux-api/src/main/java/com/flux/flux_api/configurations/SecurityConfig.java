@@ -10,9 +10,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
+import com.flux.flux_api.authentication.CustomUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    CustomUserDetailsService userDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception
@@ -20,8 +28,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/public/**").permitAll()
                 .anyRequest().authenticated()
             )
@@ -29,10 +36,17 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             )
             .formLogin(form -> form
-                .loginProcessingUrl("/api/auth/login").permitAll()
+                .loginProcessingUrl("/auth/login")
+                .permitAll()
+                .successHandler((request, response, authentication) -> {
+                    response.setStatus(200);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"status\":\"ok\"}");
+                    response.getWriter().flush();
+                })
             )
             .logout(logout -> logout
-                .logoutUrl("/api/auth/logout")
+                .logoutUrl("/auth/logout")
             )
             .rememberMe(remember -> remember
                 .key("flux-remember-key")

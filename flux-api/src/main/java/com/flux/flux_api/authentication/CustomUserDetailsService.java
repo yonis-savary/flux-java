@@ -3,10 +3,12 @@ package com.flux.flux_api.authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import com.flux.flux_api.entity.User;
-import com.flux.flux_api.repository.UserRepository;
+import com.flux.flux_api.generated.entity.User;
+import com.flux.flux_api.generated.repository.UserRepository;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
