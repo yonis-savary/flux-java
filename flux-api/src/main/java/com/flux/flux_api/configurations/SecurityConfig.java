@@ -47,6 +47,7 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 .logoutUrl("/auth/logout")
+                .logoutSuccessUrl("/")
             )
             .rememberMe(remember -> remember
                 .key("flux-remember-key")

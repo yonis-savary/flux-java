@@ -1,5 +1,5 @@
 export * from './authentication.service';
 import { AuthenticationService } from './authentication.service';
-export * from './pingPongController.service';
-import { PingPongControllerService } from './pingPongController.service';
-export const APIS = [AuthenticationService, PingPongControllerService];
+export * from './pingPong.service';
+import { PingPongService } from './pingPong.service';
+export const APIS = [AuthenticationService, PingPongService];

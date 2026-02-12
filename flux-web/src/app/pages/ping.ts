@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { PingPongControllerService } from "../api";
+import { Component, OnInit, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, map } from "rxjs";
+import { PingPongService } from "../api";
 
 @Component({
     selector: 'app-ping',
@@ -10,18 +10,19 @@ import { firstValueFrom } from "rxjs";
     imports: [CommonModule]
 })
 export class Ping implements OnInit {
-    response = "Loading"
+    response = signal("Loading")
 
-    pingService: PingPongControllerService
+    pingService: PingPongService
     constructor(
-        pingService: PingPongControllerService
+        pingService: PingPongService
     ) {
         this.pingService = pingService
     }
 
     async ngOnInit(): Promise<void> {
-        const res = await firstValueFrom(this.pingService.ping());
-        console.log(res);
+        const res = await firstValueFrom(this.pingService.ping())
+        this.response.set(res.status);
+        console.log(res,this.response)
     }
 
 }

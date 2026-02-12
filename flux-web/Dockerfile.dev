@@ -2,7 +2,14 @@ FROM node:20
 
 WORKDIR /app
 
+ARG BACKEND_URL
+
 COPY package*.json ./
 RUN npm install
+
+COPY . .
+
+RUN cp /app/src/environments/templates/*.ts /app/src/environments/ && \
+    sed -i "s=BACKEND_URL=$BACKEND_URL=g" /app/src/environments/*.ts
 
 CMD ["npm", "run", "start", "--", "--host", "0.0.0.0"]

@@ -3,6 +3,7 @@ import { Ping } from './pages/ping';
 import { Login } from './pages/auth/login';
 import { ApplicationLayout } from './layouts/applicationLayout';
 import { FormLayout } from './layouts/formLayout';
+import { Logout } from './pages/auth/logout';
 
 export const routes: Routes = [
     {
@@ -24,6 +25,11 @@ export const routes: Routes = [
                 path: "login",
                 title: "Login Page",
                 component: Login
+            },
+            {
+                path: "logout",
+                title: "Logging out",
+                component: Logout
             }
         ]
     }

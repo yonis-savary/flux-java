@@ -30,4 +30,4 @@ npm run openapi
 ## Todo 
 
 - [x] Add a make up-dev command to have live changes
-- [ ] Make both frontend/backend ports customisable
+- [x] Make both frontend/backend ports customisable

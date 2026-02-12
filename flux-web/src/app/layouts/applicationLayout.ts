@@ -27,6 +27,8 @@ import { Menubar } from "primeng/menubar";
 export class ApplicationLayout {
 
     navItems = [
+        /*
+
         {
             label: 'Home',
             icon: 'pi pi-home',
@@ -55,6 +57,7 @@ export class ApplicationLayout {
             icon: "pi pi-calculator",
             routerLink: "/simulator"
         },
+        */
         {
             label: 'Logout',
             icon: 'pi pi-sign-out',

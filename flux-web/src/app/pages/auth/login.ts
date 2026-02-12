@@ -58,8 +58,7 @@ export class Login {
         body.set('password', this.form.value.password || '');
 
         try {
-            // TODO Use ENV (IMPORTANT)
-            const response = await firstValueFrom(this.http.post('http://localhost:8080/api/auth/login', body.toString(), {
+            await firstValueFrom(this.http.post('auth/login', body.toString(), {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 withCredentials: true
             }))

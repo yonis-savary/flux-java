@@ -19,7 +19,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8080:8080"
+      - "${BACKEND_PORT:-8080}:8080"
     volumes:
       - ./flux-api:/app
 
@@ -27,11 +27,13 @@ services:
     build:
       context: ./flux-web
       dockerfile: Dockerfile.dev
+      args:
+        BACKEND_URL: ${BACKEND_URL}
     env_file:
       - ./.env
     ports:
-      - "4200:4200"
+      - "${FRONTEND_PORT:-4200}:4200"
     depends_on:
       - api
     volumes:
-      - ./flux-web:/app
+      - ./flux-web/src/app:/app/src/app
